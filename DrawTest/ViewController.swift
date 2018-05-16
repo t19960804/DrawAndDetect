@@ -8,23 +8,33 @@
 
 import UIKit
 
-class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
-    @IBOutlet weak var pictureView: UIImageView!
+class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate,ScratchCardDelegate {
+    
+    @IBOutlet weak var pictureView: ScratchMask!
     @IBAction func chooseImage(_ sender: UIBarButtonItem) {
         chooseImg()
     }
     @IBAction func clear(_ sender: UIButton) {
-        canvas.clearCanvas()
+        //创建刮刮卡组件
+        let scratchCard = ScratchCard(frame: CGRect(x:0, y:20, width:400, height:700),
+                                      couponImage: pictureView.image!,
+                                      maskImage: UIImage(named: "gray.jpg")!.alpha(0.7))
+        //设置代理
+        scratchCard.delegate = self
+        self.view.addSubview(scratchCard)
+        
+    }
+    @IBAction func calculate(_ sender: UIButton) {
+        pictureView.calculate()
     }
     
-    @IBOutlet weak var canvas: Canvas!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        //限制範圍只在畫板內
-        canvas.clipsToBounds = true
-        //不能多點觸控
-        canvas.isMultipleTouchEnabled = false
+       
         
+       
     }
 
     override func didReceiveMemoryWarning() {
@@ -40,10 +50,28 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         self.present(photoPickerViewController, animated: true, completion: nil)//開啟相簿
         }
         //選完相片後自動調用
-        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any])
+        {
             let selectedImage = info[UIImagePickerControllerOriginalImage] as? UIImage//獲得相片
             self.pictureView.image = selectedImage//顯示於ImageView
             picker.dismiss(animated: true, completion: nil)//關閉相簿
+            //创建刮刮卡组件
+            let scratchCard = ScratchCard(frame: CGRect(x:0, y:20, width:400, height:700),
+                                          couponImage: pictureView.image!,
+                                          maskImage: UIImage(named: "gray.jpg")!.alpha(0.7))
+            //设置代理
+            scratchCard.delegate = self
+            self.view.addSubview(scratchCard)
         }
 }
-
+    //擴充alpha方法
+    extension UIImage
+    {
+        func alpha(_ value:CGFloat) -> UIImage {
+            UIGraphicsBeginImageContextWithOptions(size, false, scale)
+            draw(at: CGPoint.zero, blendMode: .normal, alpha: value)
+            let newImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            return newImage!
+        }
+    }
