@@ -76,7 +76,7 @@ class ScratchMask: UIImageView {
         guard  touches.first != nil else {
             return
         }
-         print("xPointEnded.count:\(xPointArrays.count)   yPointEnded.count:\(yPointArrays.count)")
+         calculate()
         //调用相应的代理方法
         delegate?.scratchEnded?(point: touchPoint!)
     }
@@ -112,16 +112,22 @@ class ScratchMask: UIImageView {
     {
         let XarraysMax = xPointArrays.sorted(by: >)
         let YarraysMax = yPointArrays.sorted(by: >)
-//        let XarraysMin = xPointArrays.sorted(by: <)
-//        let YarraysMin = yPointArrays.sorted(by: <)
-//        print("XarraysMax:\(XarraysMax[1])")
-//        print("XarraysMin:\(XarraysMin[1])")
-//        print("YarraysMax:\(YarraysMax[1])")
-//        print("YarraysMin:\(YarraysMin[1])")
-//        print("width:\(XarraysMax[1] - XarraysMin[1])  height:\(YarraysMax[1] - YarraysMin[1])")
-        print("XarraysMax.count:\(XarraysMax.count)   YarraysMax.count:\(YarraysMax.count)")
-        
+        let XarraysMin = xPointArrays.sorted(by: <)
+        let YarraysMin = yPointArrays.sorted(by: <)
+        print("XarraysMax:\(XarraysMax[1])")
+        print("XarraysMin:\(XarraysMin[1])")
+        print("YarraysMax:\(YarraysMax[1])")
+        print("YarraysMin:\(YarraysMin[1])")
+        print("width:\(XarraysMax[1] - XarraysMin[1])  height:\(YarraysMax[1] - YarraysMin[1])")
+
+
     }
+    func clear()
+    {
+        xPointArrays.removeAll()
+        yPointArrays.removeAll()
+    }
+   
     
 }
 

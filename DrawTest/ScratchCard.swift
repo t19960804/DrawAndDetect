@@ -14,7 +14,8 @@ import UIKit
     @objc optional func scratchEnded(point: CGPoint)
 }
 class ScratchCard: UIView {
-
+    
+//////////////////////////////////////////////
     //涂层
     var scratchMask: ScratchMask!
     //底层券面图片
@@ -52,5 +53,6 @@ class ScratchCard: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
 
 }
