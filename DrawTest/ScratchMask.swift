@@ -76,7 +76,7 @@ class ScratchMask: UIImageView {
         guard  touches.first != nil else {
             return
         }
-         calculate()
+         //calculate()
         //调用相应的代理方法
         delegate?.scratchEnded?(point: touchPoint!)
     }
