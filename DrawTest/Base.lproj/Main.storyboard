@@ -47,6 +47,10 @@
                                         </connections>
                                     </button>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="WMm-ag-0kd"/>
+                                    <constraint firstAttribute="width" constant="414" id="lhg-zx-hcN"/>
+                                </constraints>
                             </stackView>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="enm-Zc-UTC">
                                 <rect key="frame" x="0.0" y="16" width="414" height="44"/>

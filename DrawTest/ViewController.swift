@@ -10,9 +10,9 @@ import UIKit
 import TesseractOCR
 
 
-class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate,ScratchCardDelegate,G8TesseractDelegate {
+class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate,ScratchCardDelegate,G8TesseractDelegate{
     
-    //將ScratchCard宣告在外部供調用
+    //將ScratchCard宣告在外部供調用\G8TesseractDelegate
     var scratchCard : ScratchCard?
     
     //辨識
@@ -43,9 +43,9 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    func progressImageRecognition(for tesseract: G8Tesseract!) {
-        print("Recognition Progress\(tesseract.progress) %")
-    }
+//    func progressImageRecognition(for tesseract: G8Tesseract!) {
+//        print("Recognition Progress\(tesseract.progress) %")
+//    }
     func chooseImg()
     {
         //新增UIImagePickerControllerDelegate/UINavigationControllerDelegate協定
@@ -65,10 +65,11 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         }
     func createNewMask()
     {
+
         //创建刮刮卡组件
-        scratchCard = ScratchCard(frame: CGRect(x:0, y:20, width:400, height:700),
-                                      couponImage: pictureView.image!,
-                                      maskImage: UIImage(named: "gray.jpg")!.alpha(0.7))
+        scratchCard = ScratchCard(frame: CGRect(x:0, y:47, width:414, height:639),
+                                  couponImage: pictureView.image!,
+                                  maskImage: UIImage(named: "dark-gray.jpg")!.alpha(0.9))
         //设置代理
         scratchCard?.delegate = self
         
@@ -77,19 +78,36 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
     }
     func detect()
     {
+//        if  let tesseract = G8Tesseract(language:"eng")
+//        {
+//            tesseract.delegate = self
+//            //tesseract.image = testImg.image?.g8_blackAndWhite()
+//            tesseract.image = scratchCard?.scratchMask.image?.g8_blackAndWhite()
+//            tesseract.recognize()
+//
+//            print("text:\((tesseract.recognizedText)!)")
+//        }
+//        else
+//        {
+//            print("none")
+//        }
         if  let tesseract = G8Tesseract(language:"eng")
         {
             tesseract.delegate = self
-            //tesseract.image = testImg.image?.g8_blackAndWhite()
+            
+            //tesseract.image = pictureView.image?.g8_blackAndWhite()
             tesseract.image = scratchCard?.scratchMask.image?.g8_blackAndWhite()
+            //tesseract.image = scratchCard?.couponImageView.image?.g8_blackAndWhite()
+
             tesseract.recognize()
             
-            print("text:\(tesseract.recognizedText)")
+            print("text:\((tesseract.recognizedText)!)")
         }
         else
         {
             print("none")
         }
+
         
     }
 }

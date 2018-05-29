@@ -35,8 +35,10 @@ class ScratchCard: UIView {
         super.init(frame: frame)
         
 
-        let childFrame = CGRect(x: 0, y: 47, width: 414,
-                                height: 639)
+        let childFrame = CGRect(x: 0, y: 10, width: 414,
+                                height: 649)
+
+        
         //添加底层券面
         couponImageView = UIImageView(frame: childFrame)
         couponImageView.image = couponImage
