@@ -5,19 +5,30 @@
 //  Created by Asabulu International on 2018/5/3.
 //  Copyright © 2018年 asa. All rights reserved.
 //
-
+//
 import UIKit
 import TesseractOCR
 
 
-class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate,ScratchCardDelegate,G8TesseractDelegate{
+class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate,ScratchCardDelegate,ReverseCardDelegate,G8TesseractDelegate{
     
     //將ScratchCard宣告在外部供調用\G8TesseractDelegate
     var scratchCard : ScratchCard?
-    
+    var reverseCard : ReverseCard?
+    //Outlet
+    @IBOutlet weak var clear: UIButton!
+    @IBOutlet weak var calculate: UIButton!
     //辨識
     @IBAction func detectImg(_ sender: UIBarButtonItem) {
-       detect()
+        //將pictureView上的原圖用Crop()裁切
+        //CGRect(x:最大X點,y:最小Y點,width:最大X點-最小X點,height:最大Y點-最小Y點)
+        let beCropedImage = crop(image: (scratchCard?.couponImageView.image)!, toRect: CGRect(
+            x:((scratchCard?.scratchMask.returnValue().smallestX)! + 100.0),
+            y:((scratchCard?.scratchMask.returnValue().smallestY)! - 100.0),
+            width:(scratchCard?.scratchMask.returnValue().xMinus)!,
+            height:(scratchCard?.scratchMask.returnValue().yMinus)!))
+        //detect(Image: beCropedImage)
+        createReverseMask(Image: beCropedImage)
     }
     @IBOutlet weak var pictureView: UIImageView!
   
@@ -35,7 +46,8 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        customButton(Button: clear)
+        customButton(Button: calculate)
         
        
     }
@@ -43,9 +55,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-//    func progressImageRecognition(for tesseract: G8Tesseract!) {
-//        print("Recognition Progress\(tesseract.progress) %")
-//    }
+
     func chooseImg()
     {
         //新增UIImagePickerControllerDelegate/UINavigationControllerDelegate協定
@@ -76,28 +86,37 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         
         self.view.addSubview(scratchCard!)
     }
-    func detect()
+    //剪裁後新組件
+    func createReverseMask(Image image: UIImage)
     {
-//        if  let tesseract = G8Tesseract(language:"eng")
-//        {
-//            tesseract.delegate = self
-//            //tesseract.image = testImg.image?.g8_blackAndWhite()
-//            tesseract.image = scratchCard?.scratchMask.image?.g8_blackAndWhite()
-//            tesseract.recognize()
-//
-//            print("text:\((tesseract.recognizedText)!)")
-//        }
-//        else
-//        {
-//            print("none")
-//        }
+        
+//        //创建刮刮卡组件
+
+        reverseCard = ReverseCard(frame: CGRect(
+            x:(scratchCard?.scratchMask.returnValue().smallestX)!,
+            y:(scratchCard?.scratchMask.returnValue().smallestY)!,
+            width:((scratchCard?.scratchMask.returnValue().xMinus)! + 30.0),
+            height:((scratchCard?.scratchMask.returnValue().yMinus)! + 30.0)),
+            couponImage: UIImage(named: "dark-gray.jpg")!.alpha(0.9),
+            maskImage:image)
+        
+            
+        
+        //设置代理
+        reverseCard?.delegate = self
+        
+        self.view.addSubview(reverseCard!)
+    }
+    func detect(Image image : UIImage)
+    {
+
         if  let tesseract = G8Tesseract(language:"eng")
         {
             tesseract.delegate = self
             
-            //tesseract.image = pictureView.image?.g8_blackAndWhite()
-            tesseract.image = scratchCard?.scratchMask.image?.g8_blackAndWhite()
-            //tesseract.image = scratchCard?.couponImageView.image?.g8_blackAndWhite()
+            
+            tesseract.image = image.g8_blackAndWhite()
+            
 
             tesseract.recognize()
             
@@ -108,6 +127,18 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
             print("none")
         }
 
+        
+    }
+    func customButton(Button button : UIButton)
+    {
+        button.layer.cornerRadius = button.frame.height / 2
+        button.layer.shadowRadius = 6
+    }
+    func crop(image : UIImage, toRect: CGRect) -> UIImage
+    {
+        let cgImage :CGImage = image.cgImage!
+        let cropCGImage : CGImage! = cgImage.cropping(to: toRect)
+        return UIImage(cgImage: cropCGImage)
         
     }
 }

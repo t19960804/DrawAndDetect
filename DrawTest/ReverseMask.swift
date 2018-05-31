@@ -1,18 +1,19 @@
 //
-//  ScratchMask.swift
+//  ReverseMask.swift
 //  DrawTest
 //
-//  Created by Asabulu International on 2018/5/15.
+//  Created by Asabulu International on 2018/5/30.
 //  Copyright © 2018年 asa. All rights reserved.
 //
 
 import UIKit
 
-class ScratchMask: UIImageView {
+class ReverseMask: UIImageView {
+
     var xPointArrays = [CGFloat]()
     var yPointArrays = [CGFloat]()
     //代理对象
-    weak var delegate: ScratchCardDelegate?
+    weak var delegate: ReverseCardDelegate?
     
     //线条形状
     var lineType:CGLineCap!
@@ -57,7 +58,7 @@ class ScratchMask: UIImageView {
         
         //手一滑動，目前滑動到的點
         touchPoint = touches.first?.location(in: self)
-
+        
         //清除两点间的涂层
         eraseMask(fromPoint: startingPoint, toPoint: touchPoint)
         //保存最新触摸点坐标，供下次使用
@@ -66,7 +67,7 @@ class ScratchMask: UIImageView {
         startingPoint = touchPoint
         xPointArrays.append(startingPoint.x)
         yPointArrays.append(startingPoint.y)
-
+        
         
         
     }
@@ -76,7 +77,7 @@ class ScratchMask: UIImageView {
         guard  touches.first != nil else {
             return
         }
-         //calculate()
+        //calculate()
         //调用相应的代理方法
         delegate?.scratchEnded?(point: touchPoint!)
     }
@@ -92,7 +93,7 @@ class ScratchMask: UIImageView {
         path = UIBezierPath()
         path.move(to: fromPoint)
         path.addLine(to: toPoint)
-       
+        
         let context = UIGraphicsGetCurrentContext()!
         context.setShouldAntialias(true)
         context.setLineCap(lineType)
@@ -108,20 +109,13 @@ class ScratchMask: UIImageView {
     }
     
     
-    func returnValue() -> (xMinus:CGFloat,yMinus:CGFloat,
-                            smallestX:CGFloat,smallestY:CGFloat,
-                            largestY:CGFloat,largestX:CGFloat)
+    func returnValue() -> (xMinus:CGFloat,yMinus:CGFloat,smallestX:CGFloat,smallestY:CGFloat)
     {
         let XarraysMax = xPointArrays.sorted(by: >)
-        let XarraysMin = xPointArrays.sorted(by: <)
         let YarraysMax = yPointArrays.sorted(by: >)
+        let XarraysMin = xPointArrays.sorted(by: <)
         let YarraysMin = yPointArrays.sorted(by: <)
-        return (XarraysMax[1] - XarraysMin[1],
-                YarraysMax[1] - YarraysMin[1],
-                XarraysMin[1],
-                YarraysMin[1],
-                YarraysMax[1],
-                XarraysMax[1])
+        return (XarraysMax[1] - XarraysMin[1],YarraysMax[1] - YarraysMin[1],XarraysMin[1],YarraysMin[1])
     }
     func calculate()
     {
@@ -134,15 +128,13 @@ class ScratchMask: UIImageView {
         print("YarraysMax:\(YarraysMax[1])")
         print("YarraysMin:\(YarraysMin[1])")
         print("width:\(XarraysMax[1] - XarraysMin[1])  height:\(YarraysMax[1] - YarraysMin[1])")
-
-
+        
+        
     }
     func clear()
     {
         xPointArrays.removeAll()
         yPointArrays.removeAll()
     }
-   
-    
-}
 
+}

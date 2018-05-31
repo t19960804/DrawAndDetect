@@ -13,6 +13,8 @@
 		5954062B209AB9AE0006A3CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5954062A209AB9AE0006A3CB /* Assets.xcassets */; };
 		5954062E209AB9AE0006A3CB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5954062C209AB9AE0006A3CB /* LaunchScreen.storyboard */; };
 		59540636209ABF250006A3CB /* Canvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59540635209ABF250006A3CB /* Canvas.swift */; };
+		598BDC8820BE7B280027D3E9 /* ReverseCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598BDC8720BE7B280027D3E9 /* ReverseCard.swift */; };
+		598BDC8A20BE7C140027D3E9 /* ReverseMask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598BDC8920BE7C140027D3E9 /* ReverseMask.swift */; };
 		59BDE8EC20AA9EF300F0AF73 /* ScratchMask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BDE8EB20AA9EF300F0AF73 /* ScratchMask.swift */; };
 		59BDE8EE20AA9F1A00F0AF73 /* ScratchCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BDE8ED20AA9F1A00F0AF73 /* ScratchCard.swift */; };
 		59BDE90120B68A8900F0AF73 /* tessdata in Resources */ = {isa = PBXBuildFile; fileRef = 59BDE90020B68A8800F0AF73 /* tessdata */; };
@@ -29,6 +31,8 @@
 		5954062D209AB9AE0006A3CB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5954062F209AB9AE0006A3CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		59540635209ABF250006A3CB /* Canvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Canvas.swift; sourceTree = "<group>"; };
+		598BDC8720BE7B280027D3E9 /* ReverseCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReverseCard.swift; sourceTree = "<group>"; };
+		598BDC8920BE7C140027D3E9 /* ReverseMask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReverseMask.swift; sourceTree = "<group>"; };
 		59BDE8EB20AA9EF300F0AF73 /* ScratchMask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScratchMask.swift; sourceTree = "<group>"; };
 		59BDE8ED20AA9F1A00F0AF73 /* ScratchCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScratchCard.swift; sourceTree = "<group>"; };
 		59BDE90020B68A8800F0AF73 /* tessdata */ = {isa = PBXFileReference; lastKnownFileType = folder; path = tessdata; sourceTree = "<group>"; };
@@ -87,6 +91,8 @@
 				59540635209ABF250006A3CB /* Canvas.swift */,
 				59BDE8EB20AA9EF300F0AF73 /* ScratchMask.swift */,
 				59BDE8ED20AA9F1A00F0AF73 /* ScratchCard.swift */,
+				598BDC8720BE7B280027D3E9 /* ReverseCard.swift */,
+				598BDC8920BE7C140027D3E9 /* ReverseMask.swift */,
 			);
 			path = DrawTest;
 			sourceTree = "<group>";
@@ -217,6 +223,8 @@
 				59540626209AB9AA0006A3CB /* ViewController.swift in Sources */,
 				59540624209AB9AA0006A3CB /* AppDelegate.swift in Sources */,
 				59540636209ABF250006A3CB /* Canvas.swift in Sources */,
+				598BDC8820BE7B280027D3E9 /* ReverseCard.swift in Sources */,
+				598BDC8A20BE7C140027D3E9 /* ReverseMask.swift in Sources */,
 				59BDE8EE20AA9F1A00F0AF73 /* ScratchCard.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -20,16 +20,27 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U8S-N5-t5j">
-                                <rect key="frame" x="0.0" y="67" width="414" height="619"/>
+                                <rect key="frame" x="0.0" y="67" width="414" height="609"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sTi-U2-Hah">
+                                        <rect key="frame" x="10" y="0.0" width="394" height="619"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="394" id="hPv-wT-4ZO"/>
+                                            <constraint firstAttribute="height" constant="619" id="kEd-Wu-5wP"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="sTi-U2-Hah" firstAttribute="leading" secondItem="U8S-N5-t5j" secondAttribute="leading" constant="10" id="ZDv-QA-HaC"/>
+                                    <constraint firstAttribute="trailing" secondItem="sTi-U2-Hah" secondAttribute="trailing" constant="10" id="q1G-ji-Wr5"/>
+                                    <constraint firstItem="sTi-U2-Hah" firstAttribute="top" secondItem="U8S-N5-t5j" secondAttribute="top" id="tCi-N7-kT4"/>
+                                </constraints>
                             </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sTi-U2-Hah">
-                                <rect key="frame" x="0.0" y="67" width="414" height="639"/>
-                            </imageView>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="9TK-6Q-so3">
-                                <rect key="frame" x="0.0" y="706" width="414" height="30"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="9TK-6Q-so3">
+                                <rect key="frame" x="7" y="696" width="400" height="30"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FtY-Fa-mZu">
-                                        <rect key="frame" x="0.0" y="0.0" width="207" height="30"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="195" height="30"/>
                                         <color key="backgroundColor" red="0.43138056699999999" green="0.66917676130000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <color key="tintColor" red="0.98791965270000004" green="1" blue="0.97521758859999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="clear"/>
@@ -38,7 +49,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nU4-Ya-gU3">
-                                        <rect key="frame" x="207" y="0.0" width="207" height="30"/>
+                                        <rect key="frame" x="205" y="0.0" width="195" height="30"/>
                                         <color key="backgroundColor" red="0.43138056699999999" green="0.66917676130000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <color key="tintColor" red="0.98791965270000004" green="1" blue="0.97521758859999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="calculate"/>
@@ -79,24 +90,21 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="enm-Zc-UTC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="1oT-H4-sgo"/>
-                            <constraint firstItem="sTi-U2-Hah" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="1t8-tJ-07v"/>
-                            <constraint firstItem="sTi-U2-Hah" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="845-Mp-hrg"/>
                             <constraint firstItem="enm-Zc-UTC" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="16" id="BmY-mL-DsH"/>
                             <constraint firstItem="9TK-6Q-so3" firstAttribute="top" secondItem="U8S-N5-t5j" secondAttribute="bottom" constant="20" id="IA4-jy-OzJ"/>
-                            <constraint firstItem="9TK-6Q-so3" firstAttribute="top" secondItem="sTi-U2-Hah" secondAttribute="bottom" id="MDu-0F-RWX"/>
-                            <constraint firstItem="sTi-U2-Hah" firstAttribute="top" secondItem="enm-Zc-UTC" secondAttribute="bottom" constant="7" id="SrV-Ti-De7"/>
-                            <constraint firstItem="sTi-U2-Hah" firstAttribute="top" secondItem="enm-Zc-UTC" secondAttribute="bottom" constant="7" id="Xh4-XX-eVk"/>
-                            <constraint firstItem="9TK-6Q-so3" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Y6q-Gc-pJx"/>
+                            <constraint firstItem="9TK-6Q-so3" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="7" id="Y6q-Gc-pJx"/>
                             <constraint firstItem="enm-Zc-UTC" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="an0-KG-6fU"/>
                             <constraint firstItem="U8S-N5-t5j" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="hhz-Dr-9xO"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="9TK-6Q-so3" secondAttribute="trailing" id="kTO-5d-TIn"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="9TK-6Q-so3" secondAttribute="bottom" id="klT-WO-E3h"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="9TK-6Q-so3" secondAttribute="trailing" constant="7" id="kTO-5d-TIn"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="9TK-6Q-so3" secondAttribute="bottom" constant="10" id="klT-WO-E3h"/>
                             <constraint firstItem="U8S-N5-t5j" firstAttribute="top" secondItem="enm-Zc-UTC" secondAttribute="bottom" constant="7" id="uqY-Ss-hh1"/>
                             <constraint firstItem="U8S-N5-t5j" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="xkO-yl-xjt"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="calculate" destination="nU4-Ya-gU3" id="4VZ-kJ-A4G"/>
+                        <outlet property="clear" destination="FtY-Fa-mZu" id="gWU-Iz-6SF"/>
                         <outlet property="pictureView" destination="sTi-U2-Hah" id="zKh-Q3-ubn"/>
                     </connections>
                 </viewController>
