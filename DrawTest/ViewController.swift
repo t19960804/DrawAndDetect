@@ -22,9 +22,10 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
     @IBAction func detectImg(_ sender: UIBarButtonItem) {
         //將pictureView上的原圖用Crop()裁切
         //CGRect(x:最大X點,y:最小Y點,width:最大X點-最小X點,height:最大Y點-最小Y點)
-        let beCropedImage = crop(image: (scratchCard?.couponImageView.image)!, toRect: CGRect(
-            x:((scratchCard?.scratchMask.returnValue().smallestX)! + 100.0),
-            y:((scratchCard?.scratchMask.returnValue().smallestY)! - 100.0),
+        let resizedImage = self.resizeImage(image:(scratchCard?.couponImageView.image!)!, targetSize: CGSize(width: 414.0, height: 639.0))
+        let beCropedImage = crop(image:resizedImage, toRect: CGRect(
+            x:((scratchCard?.scratchMask.returnValue().smallestX)!),
+            y:((scratchCard?.scratchMask.returnValue().smallestY)!),
             width:(scratchCard?.scratchMask.returnValue().xMinus)!,
             height:(scratchCard?.scratchMask.returnValue().yMinus)!))
         //detect(Image: beCropedImage)
@@ -48,7 +49,6 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         super.viewDidLoad()
         customButton(Button: clear)
         customButton(Button: calculate)
-        
        
     }
 
@@ -92,13 +92,20 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         
 //        //创建刮刮卡组件
 
+//        reverseCard = ReverseCard(frame: CGRect(
+//            x:(scratchCard?.scratchMask.returnValue().smallestX)!,
+//            y:(scratchCard?.scratchMask.returnValue().smallestY)! + 47.0,
+//            width:((scratchCard?.scratchMask.returnValue().xMinus))!,
+//            height:((scratchCard?.scratchMask.returnValue().yMinus))!),
+//            couponImage: UIImage(named: "dark-gray.jpg")!.alpha(0.9),
+//            maskImage:image)
         reverseCard = ReverseCard(frame: CGRect(
-            x:(scratchCard?.scratchMask.returnValue().smallestX)!,
-            y:(scratchCard?.scratchMask.returnValue().smallestY)!,
-            width:((scratchCard?.scratchMask.returnValue().xMinus)! + 30.0),
-            height:((scratchCard?.scratchMask.returnValue().yMinus)! + 30.0)),
-            couponImage: UIImage(named: "dark-gray.jpg")!.alpha(0.9),
-            maskImage:image)
+            x:0,
+            y:47.0,
+            width:((scratchCard?.scratchMask.returnValue().xMinus))!,
+            height:((scratchCard?.scratchMask.returnValue().yMinus))!),
+                                  couponImage: UIImage(named: "dark-gray.jpg")!.alpha(0.9),
+                                  maskImage:image)
         
             
         
@@ -129,17 +136,45 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
 
         
     }
+    //自訂按鈕格式
     func customButton(Button button : UIButton)
     {
         button.layer.cornerRadius = button.frame.height / 2
         button.layer.shadowRadius = 6
     }
+    //剪裁圖片
     func crop(image : UIImage, toRect: CGRect) -> UIImage
     {
         let cgImage :CGImage = image.cgImage!
         let cropCGImage : CGImage! = cgImage.cropping(to: toRect)
         return UIImage(cgImage: cropCGImage)
         
+    }
+    //Resize圖片
+    func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
+        let size = image.size
+        
+        let widthRatio  = targetSize.width  / size.width
+        let heightRatio = targetSize.height / size.height
+        
+        // Figure out what our orientation is, and use that to form the rectangle
+        var newSize: CGSize
+        if(widthRatio > heightRatio) {
+            newSize = CGSize(width:size.width * heightRatio, height:size.height * heightRatio)
+        } else {
+            newSize = CGSize(width:size.width * widthRatio,  height:size.height * widthRatio)
+        }
+        
+        // This is the rect that we've calculated out and this is what is actually used below
+        let rect = CGRect(x:0, y:0, width:newSize.width, height:newSize.height)
+        
+        // Actually do the resizing to the rect using the ImageContext stuff
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+        image.draw(in: rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage!
     }
 }
     //擴充alpha方法

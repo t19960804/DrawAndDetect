@@ -30,10 +30,10 @@ class ReverseCard: UIView {
         
         //        let childFrame = CGRect(x: 0, y: 10, width: 414,
         //                                height: 649)
-        let childFrame = CGRect(x: frame.minX,
-                                y: frame.minY,
-                                width: frame.width,
-                                height: frame.height)
+        let childFrame = CGRect(x:10,
+                                y:20,
+                                width:393,
+                                height:619)
         
         
         //添加底层券面
