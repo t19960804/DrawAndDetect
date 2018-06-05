@@ -36,6 +36,7 @@ class ReverseCard: UIView {
                                 height:619)
         
         
+        
         //添加底层券面
         couponImageView = UIImageView(frame: childFrame)
         couponImageView.image = couponImage

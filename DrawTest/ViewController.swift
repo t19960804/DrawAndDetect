@@ -14,22 +14,56 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
     
     //將ScratchCard宣告在外部供調用\G8TesseractDelegate
     var scratchCard : ScratchCard?
+    var no2scratchCard : ScratchCard?
     var reverseCard : ReverseCard?
+    var snapShotImage = UIImage()
+    var selectedImage = UIImage()
     //Outlet
     @IBOutlet weak var clear: UIButton!
     @IBOutlet weak var calculate: UIButton!
     //辨識
     @IBAction func detectImg(_ sender: UIBarButtonItem) {
-        //將pictureView上的原圖用Crop()裁切
-        //CGRect(x:最大X點,y:最小Y點,width:最大X點-最小X點,height:最大Y點-最小Y點)
-        let resizedImage = self.resizeImage(image:(scratchCard?.couponImageView.image!)!, targetSize: CGSize(width: 414.0, height: 639.0))
-        let beCropedImage = crop(image:resizedImage, toRect: CGRect(
-            x:((scratchCard?.scratchMask.returnValue().smallestX)!),
-            y:((scratchCard?.scratchMask.returnValue().smallestY)!),
-            width:(scratchCard?.scratchMask.returnValue().xMinus)!,
-            height:(scratchCard?.scratchMask.returnValue().yMinus)!))
-        //detect(Image: beCropedImage)
-        createReverseMask(Image: beCropedImage)
+       
+        
+
+        snapShotImage = (scratchCard?.takeSnapshot(
+            X:(scratchCard?.scratchMask.returnValue().smallestX)!,
+            Y:(scratchCard?.scratchMask.returnValue().smallestY)!,
+            Width:((scratchCard?.scratchMask.returnValue().xMinus)! ),
+            Height:((scratchCard?.scratchMask.returnValue().yMinus)!)))!
+        
+//        let cropImage = crop(image: snapShotImage, toRect: CGRect(
+//            x:(scratchCard?.scratchMask.returnValue().smallestX)!,
+//            y:(scratchCard?.scratchMask.returnValue().smallestY)!,
+//            width:(scratchCard?.scratchMask.returnValue().xMinus)!,
+//            height:(scratchCard?.scratchMask.returnValue().yMinus)!))
+//        print(scratchCard?.scratchMask.returnValue().smallestX)
+//        print(scratchCard?.scratchMask.returnValue().smallestY)
+        
+//        let crop = cropImage(imageToCrop: snapShotImage, toRect: CGRect(
+//                        x:(scratchCard?.scratchMask.returnValue().smallestX)!,
+//                        y:(scratchCard?.scratchMask.returnValue().smallestY)!,
+//                        width:((scratchCard?.scratchMask.returnValue().xMinus)! ),
+//                        height:((scratchCard?.scratchMask.returnValue().yMinus)!)))
+        
+//        let crop = cropImage(imageToCrop: snapShotImage, toRect: CGRect(x: 100, y: 100, width: 800, height: 800))
+        
+        
+        
+        //创建刮刮卡组件
+         
+        scratchCard = ScratchCard(frame: CGRect(x:0, y:47, width:414, height:639),
+                                  couponImage: UIImage(named: "dark-gray.jpg")!.alpha(0.99),
+                                  maskImage: snapShotImage)
+        //设置代理
+        scratchCard?.delegate = self
+        scratchCard?.couponImageView.image = snapShotImage
+
+        self.view.addSubview(scratchCard!)
+        
+        //取得截圖並且辨識
+        
+            //detect(Image: snapShotImage)
     }
     @IBOutlet weak var pictureView: UIImageView!
   
@@ -37,6 +71,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         chooseImg()
     }
     @IBAction func clear(_ sender: UIButton) {
+        
         createNewMask()
     }
     @IBAction func calculate(_ sender: UIButton) {
@@ -67,8 +102,9 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         //選完相片後自動調用
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any])
         {
-            let selectedImage = info[UIImagePickerControllerOriginalImage] as? UIImage//獲得相片
-            self.pictureView.image = selectedImage//顯示於ImageView
+            //獲得相片
+            selectedImage = (info[UIImagePickerControllerOriginalImage] as? UIImage)!
+            
             picker.dismiss(animated: true, completion: nil)//關閉相簿
             createNewMask()
            
@@ -78,42 +114,15 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
 
         //创建刮刮卡组件
         scratchCard = ScratchCard(frame: CGRect(x:0, y:47, width:414, height:639),
-                                  couponImage: pictureView.image!,
-                                  maskImage: UIImage(named: "dark-gray.jpg")!.alpha(0.9))
+                                  couponImage: selectedImage,
+                                  maskImage: UIImage(named: "dark-gray.jpg")!.alpha(0.99))
         //设置代理
         scratchCard?.delegate = self
         
         
         self.view.addSubview(scratchCard!)
     }
-    //剪裁後新組件
-    func createReverseMask(Image image: UIImage)
-    {
-        
-//        //创建刮刮卡组件
-
-//        reverseCard = ReverseCard(frame: CGRect(
-//            x:(scratchCard?.scratchMask.returnValue().smallestX)!,
-//            y:(scratchCard?.scratchMask.returnValue().smallestY)! + 47.0,
-//            width:((scratchCard?.scratchMask.returnValue().xMinus))!,
-//            height:((scratchCard?.scratchMask.returnValue().yMinus))!),
-//            couponImage: UIImage(named: "dark-gray.jpg")!.alpha(0.9),
-//            maskImage:image)
-        reverseCard = ReverseCard(frame: CGRect(
-            x:0,
-            y:47.0,
-            width:((scratchCard?.scratchMask.returnValue().xMinus))!,
-            height:((scratchCard?.scratchMask.returnValue().yMinus))!),
-                                  couponImage: UIImage(named: "dark-gray.jpg")!.alpha(0.9),
-                                  maskImage:image)
-        
-            
-        
-        //设置代理
-        reverseCard?.delegate = self
-        
-        self.view.addSubview(reverseCard!)
-    }
+    
     func detect(Image image : UIImage)
     {
 
@@ -150,6 +159,12 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         return UIImage(cgImage: cropCGImage)
         
     }
+    func cropImage(imageToCrop:UIImage, toRect rect:CGRect) -> UIImage{
+        
+        let imageRef:CGImage = imageToCrop.cgImage!.cropping(to: rect)!
+        let cropped:UIImage = UIImage(cgImage:imageRef)
+        return cropped
+    }
     //Resize圖片
     func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
         let size = image.size
@@ -176,6 +191,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         
         return newImage!
     }
+   
 }
     //擴充alpha方法
     extension UIImage
@@ -187,4 +203,23 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
             UIGraphicsEndImageContext()
             return newImage!
         }
+        
+        
     }
+//截圖
+extension UIView {
+    func takeSnapshot(X x : CGFloat, Y y : CGFloat,Width width : CGFloat,Height height : CGFloat) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(bounds.size, false, UIScreen.main.scale)
+        drawHierarchy(in:
+            CGRect(
+                                x:x,
+                                y:y,
+                                width:width,
+                                height:height
+                                ), afterScreenUpdates: true)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image!
+    }
+    
+}

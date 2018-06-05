@@ -66,7 +66,7 @@ class ScratchMask: UIImageView {
         startingPoint = touchPoint
         xPointArrays.append(startingPoint.x)
         yPointArrays.append(startingPoint.y)
-
+        print("x:\(startingPoint.x) y:\(startingPoint.y)" )
         
         
     }
