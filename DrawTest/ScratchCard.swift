@@ -35,22 +35,18 @@ class ScratchCard: UIView {
         super.init(frame: frame)
         
 
-//        let childFrame = CGRect(x: 0, y: 10, width: 414,
-//                                height: 649)
-//        let childFrame = CGRect(x: 10, y: 20, width: 393,
-//                                height: 619)
-        let couponFrame = CGRect(x: 10, y: 20, width: 393,
-                                height: 619)
-        let maskFrame = CGRect(x: 10, y: 20, width: 393,
-                                height: 619)
+
+        let viewFrame = CGRect(x: 10, y: 10, width: frame.width - 20,
+                                height: frame.height - 10)
+        
         
         //添加底层券面
-        couponImageView = UIImageView(frame: couponFrame)
+        couponImageView = UIImageView(frame: viewFrame)
         couponImageView.image = couponImage
         self.addSubview(couponImageView)
         
         //添加涂层
-        scratchMask = ScratchMask(frame: maskFrame)
+        scratchMask = ScratchMask(frame: viewFrame)
         scratchMask.image = maskImage
         scratchMask.lineWidth = scratchWidth
         scratchMask.lineType = scratchType
