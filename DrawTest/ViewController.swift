@@ -36,18 +36,18 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         
         
         
-        //创建刮刮卡组件
-         
-        detectscratchCard = ScratchCard(frame: CGRect(x:0, y:47,
-                    width:((scratchCard?.scratchMask.returnValue().xMinus)! + 50.0),
-                    height:((scratchCard?.scratchMask.returnValue().yMinus)! + 50.0)),
-                    couponImage: UIImage(named: "dark-gray.jpg")!.alpha(0.99),
-                    maskImage: snapShotImage)
-        //设置代理
-        detectscratchCard?.delegate = self
-        detectscratchCard?.couponImageView.image = snapShotImage
-
-        self.view.addSubview(detectscratchCard!)
+//        //创建刮刮卡组件
+//
+//        detectscratchCard = ScratchCard(frame: CGRect(x:0, y:47,
+//                    width:((scratchCard?.scratchMask.returnValue().xMinus)! + 50.0),
+//                    height:((scratchCard?.scratchMask.returnValue().yMinus)! + 50.0)),
+//                    couponImage: UIImage(named: "dark-gray.jpg")!.alpha(0.99),
+//                    maskImage: snapShotImage)
+//        //设置代理
+//        detectscratchCard?.delegate = self
+//        detectscratchCard?.couponImageView.image = snapShotImage
+//
+//        self.view.addSubview(detectscratchCard!)
         
         //取得截圖並且辨識
         
